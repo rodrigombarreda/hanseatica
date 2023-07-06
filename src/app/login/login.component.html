@@ -1,0 +1,39 @@
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="author" content="Yinka Enoch Adedokun">
+	<title>Login Page</title>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row main-content bg-success text-center">
+			<div class="col-md-4 text-center company__info">
+				<span class="company__logo"><h2><span class="fa fa-android"></span></h2></span>
+				<h4 class="company_title">Algun logo?</h4>
+			</div>
+			<div class="col-md-8 col-xs-12 col-sm-12 login_form ">
+				<div class="container-fluid">
+					<div class="row">
+						<h2>LOGIN</h2>
+					</div>
+					<div class="row">
+						<form [formGroup]="form" (ngSubmit)="logear()" control="" class="form-group">
+							<div class="row">
+								<input formControlName="usuriano"  type="text" name="username" id="username" class="form__input" placeholder="USUARIO">
+							</div>
+							<div class="row">
+								<input formControlName="pasuriano"  type="password" name="password" id="password" class="form__input" placeholder="CONTRASEÑA">
+							</div>
+							<div class="row">
+								<input  type="submit" value="INICIAR SESION" class="btn">
+							</div>
+							<mat-error *ngIf="showError">Usuario o contraseña incorrectas</mat-error>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>

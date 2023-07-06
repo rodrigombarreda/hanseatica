@@ -1,0 +1,148 @@
+<app-header></app-header>
+ <!--form modal-->
+<div
+class="modal fade"
+id="modalDuplicar"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog ">
+  <div class="modal-content">
+    <div class="modal-header text-center">
+      <h1 class="modal-title w-100" id="exampleModalLabel">DuplicarCliente</h1>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+    <form [formGroup]="copiarClienteForm" (ngSubmit)="duplicarClienteProceso()" >  
+      <div class="input-group input-group-lg mb-3 w-100 mx-auto p-3" >
+        <span class="input-group-text">
+            <i class="fas fa-user" ></i>
+        </span>
+        <input  formControlName="idClienteOriginal" type="text" class="form-control" placeholder="ID cliente original" [disabled]="true">
+    </div>
+      <div class="input-group input-group-lg mb-3 w-100 mx-auto p-3">
+        <span class="input-group-text">
+            <i class="fas fa-user" ></i>
+        </span>
+        <input  formControlName="nombreClienteOriginal" type="text" class="form-control" placeholder="Nombre del cliente original">
+    </div>
+    <div class="input-group input-group-lg mx-auto mb-3 w-100 p-3">
+      <span class="input-group-text">
+          <i class="fas fa-user" [class.green-icon]="this.formCliente.get('nombreCliente')?.valid"
+          [class.red-icon]="this.formCliente.get('nombreCliente')?.invalid && this.formCliente.get('nombreCliente')?.touched"></i>
+      </span>
+      <input  formControlName="nombreClienteNuevo"  type="text" class="form-control" placeholder="Nombre del cliente nuevo" [disabled]="true">
+  </div>
+  
+  <div class="mx-auto mb-3 w-100 p-3">
+    <label>Copiar usuarios?</label> 
+  <select formControlName="copiaUsuarios" class="form-select  "   title="Choose one of the following...">
+    <option value="1">true</option>
+    <option value="2">false</option>
+  </select>
+</div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+        Cerrar
+      </button>
+      <button type="submit" class="btn btn-success btn-lg">
+        Confirmar
+      </button>
+    </div>
+  </form>
+  </div>
+</div>
+</div>
+<div class="container mt-5">
+  <div class="row">
+      <div >
+          <div class="card">
+              <div class="card-body">
+                  <h3 class="titulo" style="text-align: center;">CLIENTES</h3>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="row mt-4">
+      <div class="col-lg-6">
+          <div class="card">
+              <div class="card-body">
+                <h5 class="titulo" style="text-align: center;">CREACION DE CLIENTE</h5>
+<form [formGroup]="formCliente" (ngSubmit)="crearCliente()">
+  <div class="input-group input-group-lg mb-3">
+      <span class="input-group-text">
+          <i class="fas fa-user" [class.green-icon]="this.formCliente.get('nombreCliente')?.valid"
+          [class.red-icon]="this.formCliente.get('nombreCliente')?.invalid && this.formCliente.get('nombreCliente')?.touched"></i>
+      </span>
+      <input  formControlName="nombreCliente" type="text" class="form-control" placeholder="Nombre del cliente">
+  </div>
+  <div class="input-group input-group-lg mb-3">
+      <span class="input-group-text">
+        <i class="fa-solid fa-globe" [class.green-icon]="this.formCliente.get('paisCliente')?.valid"
+        [class.red-icon]="this.formCliente.get('paisCliente')?.invalid && this.formCliente.get('paisCliente')?.touched"></i>
+      </span>
+      <input  formControlName="paisCliente" maxlength="3" type="text" class="form-control" placeholder="Pais">
+  </div>
+  <div class="input-group input-group-lg mb-3">
+    <span class="input-group-text">
+      <i class="fa-solid fa-screwdriver-wrench" [class.green-icon]="this.formCliente.get('sistemaCliente')?.valid"
+      [class.red-icon]="this.formCliente.get('sistemaCliente')?.invalid && this.formCliente.get('sistemaCliente')?.touched"></i>
+    </span>
+    <input  formControlName="sistemaCliente" maxlength="16" type="text" class="form-control" placeholder="Sistema">
+</div>
+  <div class="d-grid gap-2">
+      <button type="submit" class="btn btn-success btn-lg" [disabled]="this.formCliente.invalid">
+          <i class="fas fa-database"></i>&nbsp; Nuevo cliente</button>
+  </div>
+</form>
+</div>
+</div>
+</div>
+<div class="col-lg-6">
+  <div class="card">
+      <div class="card-body">
+<h5 class="titulo" style="text-align: center;">LISTADO DE CLIENTES</h5>
+<table class="table align-middle mb-0 bg-white">
+    <thead class="bg-light">
+      <div class="d-grid gap-2">
+
+    </div>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Pais</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr *ngFor="let accesos of listAccesos">
+        <td>{{ accesos.id}}</td>
+        <td>{{ accesos.nombre}}</td>
+        <td>{{ accesos.pais}}</td>
+        <td>
+          <i  (click)="DuplicarCliente(accesos.nombre,accesos.id)" class="far fa-edit text-info"></i>
+      </td>
+      <td>
+        <i  (click)="eliminarCLiente(accesos.id)" class="far fa-trash-alt text-danger"></i>
+      </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+</div>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="examplemodalCenterTittle" aria-hidden="true">
+  <div class="modal-dialog modal-">
+
+  </div>
+
+ 
+ 
